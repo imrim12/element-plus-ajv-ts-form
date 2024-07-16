@@ -17,7 +17,6 @@ const props = withDefaults(
 
 const emit = defineEmits<{
   (e: 'submit'): void
-  (e: 'error', errors: ValidateFieldsError ): void
 }>()
 
 defineSlots<{
@@ -62,7 +61,11 @@ function traverseSchema(schema: typeof props.schema, path: string) {
   return current
 }
 
+const isDirty = ref(false)
+
 function onValidate(prop: FormItemProp, isValid: boolean, message?: string) {
+  isDirty.value = true
+
   const path = Array.isArray(prop) ? prop.join('.') : prop
 
   let error: ValidateError | undefined = undefined
@@ -112,6 +115,7 @@ function onFormMounted() {
 defineExpose({
   reset,
   validate,
+  isDirty,
   fields,
   errors,
 })

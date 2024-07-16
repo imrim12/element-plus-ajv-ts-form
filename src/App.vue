@@ -5,6 +5,7 @@ import { s } from "ajv-ts";
 
 const formRef = ref<InstanceType<typeof AvForm>>()
 
+const formDirty = computed(() => formRef.value?.isDirty)
 const formErrors = computed(() => formRef.value?.errors)
 const formFields = computed(() => formRef.value?.fields)
 
@@ -41,6 +42,7 @@ const formData = ref<FormSchema>({
       </AvFormItem>
       <ElButton native-type="submit">Submit</ElButton>
     </AvForm>
+    <pre>isDirty: {{ formDirty }}</pre>
     <pre>fields: {{ formFields }}</pre>
     <pre>errors: {{ formErrors }}</pre>
   </div>
